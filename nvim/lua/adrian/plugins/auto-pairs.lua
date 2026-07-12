@@ -4,7 +4,6 @@ return {
     config = function()
         local autopairs = require("nvim-autopairs")
 
-        -- setup autopairs
         autopairs.setup({
             enable_afterquote = false, check_ts = true,
             ts_config = {
