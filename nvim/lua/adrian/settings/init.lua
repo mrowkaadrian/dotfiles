@@ -1,0 +1,6 @@
+require("adrian.settings.options")
+require("adrian.settings.keymaps")
+require("adrian.settings.lsp")
+require("adrian.settings.autocmds")
+require("adrian.settings.mode-cursorline")
+require("adrian.settings.autosave")
