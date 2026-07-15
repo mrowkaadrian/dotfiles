@@ -1,8 +1,9 @@
 import Quickshell
 import QtQuick
 import qs.config
-import qs.bar.modules.clock
 import qs.bar.modules.workspaces
+import qs.bar.modules.music
+import qs.bar.modules.clock
 import qs.bar.modules.session
 
 PanelWindow {
@@ -14,9 +15,16 @@ PanelWindow {
     color: "transparent"
 
     Workspaces {
+        id: workspaces
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: Appearance.bar.margin
+    }
+
+    Music {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: workspaces.right
+        anchors.rightMargin: 8
     }
 
     Clock {
@@ -25,6 +33,7 @@ PanelWindow {
     }
 
     SessionMenu {
+        id: session
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: Appearance.bar.margin
