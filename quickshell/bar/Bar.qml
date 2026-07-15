@@ -1,6 +1,5 @@
 import Quickshell
 import QtQuick
-import QtQuick.Layouts
 import qs.config
 import qs.bar.modules.clock
 import qs.bar.modules.workspaces
@@ -11,26 +10,23 @@ PanelWindow {
     screen: modelData
 
     anchors { top: true; left: true; right: true }
-    implicitHeight: Appearance.barHeight
-    color: Colors.base
+    implicitHeight: Appearance.bar.height
+    color: "transparent"
 
-    RowLayout {
-        anchors.fill: parent
-        anchors.leftMargin: 14
-        anchors.rightMargin: 14
-        spacing: 8
-
-        Workspaces {}
-        Clock {}
-
-        Item { Layout.fillWidth: true }
-
-        SessionMenu {}
+    Workspaces {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.leftMargin: Appearance.bar.margin
     }
 
-    Rectangle {
-        anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
-        height: 1
-        color: Colors.surface1
+    Clock {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    SessionMenu {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: Appearance.bar.margin
     }
 }

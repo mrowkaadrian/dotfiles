@@ -4,7 +4,18 @@ import Quickshell
 import QtQuick
 
 Singleton {
-    readonly property int barHeight: 30
+    readonly property QtObject bar: QtObject {
+        readonly property int height: 40
+        readonly property int pillHeight: 26
+        readonly property int margin: 10
+        readonly property int gap: 8
+    }
+
+    readonly property QtObject padding: QtObject {
+        readonly property int small: 8
+        readonly property int normal: 10
+        readonly property int large: 14
+    }
 
     readonly property QtObject font: QtObject {
         readonly property string family: "SF Mono"

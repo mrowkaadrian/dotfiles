@@ -1,21 +1,27 @@
 import Quickshell
 import QtQuick
 import qs.config
+import qs.components
 
-Text {
-    anchors.centerIn: parent
-    text: Qt.formatDateTime(clock.date, "hh:mm")
-    color: Colors.text
+Pill {
+    id: pill
+    fixedWidth: 100
+    highlighted: root.open || mouse.containsMouse
 
-    font {
-        family: "SF Mono"
-        letterSpacing: -1
-        pixelSize: 15
-        weight: 600
-    }
+    Text {
+        text: Qt.formatDateTime(clock.date, "hh:mm")
+        color: Colors.text
 
-    SystemClock {
-        id: clock
-        precision: SystemClock.Minutes
+        font {
+            family: Appearance.font.family
+            letterSpacing: -1
+            pixelSize: Appearance.font.normal
+            weight: 600
+        }
+
+        SystemClock {
+            id: clock
+            precision: SystemClock.Minutes
+        }
     }
 }

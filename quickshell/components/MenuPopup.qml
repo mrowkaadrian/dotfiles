@@ -9,6 +9,7 @@ PopupWindow {
 
     property Item anchorItem
     property bool open: false
+    property int gap: Appearance.bar.gap
     property int edges: Edges.Bottom | Edges.Right
     property int gravity: Edges.Bottom | Edges.Left
 
@@ -19,7 +20,7 @@ PopupWindow {
     anchor.rect.x: 0
     anchor.rect.y: 0
     anchor.rect.width: anchorItem?.width ?? 1
-    anchor.rect.height: (anchorItem?.height ?? 2) - 1
+    anchor.rect.height: (anchorItem?.height ?? 1) + gap
     anchor.edges: edges
     anchor.gravity: gravity
 
@@ -30,17 +31,15 @@ PopupWindow {
 
         height: popup.open ? parent.height : 0
         Behavior on height {
-            NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+            NumberAnimation { duration: Appearance.anim.slow; easing.type: Easing.OutCubic }
         }
 
-        // Background
         Rectangle {
             anchors.fill: parent
-            anchors.topMargin: -20
             color: Colors.base
             border.color: Colors.surface1
             border.width: 1
-            radius: 12
+            radius: Appearance.radius.large
         }
 
         Item {

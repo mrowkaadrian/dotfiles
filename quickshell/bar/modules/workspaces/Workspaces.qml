@@ -1,7 +1,6 @@
 import Quickshell
 import Quickshell.Hyprland
 import QtQuick
-import QtQuick.Layouts
 import qs.config
 import qs.components
 
@@ -11,32 +10,27 @@ Item {
     readonly property int perMonitor: 5
     property bool open: false
 
-    implicitWidth: button.implicitWidth
-    Layout.fillHeight: true
+    implicitWidth: pill.implicitWidth
+    implicitHeight: pill.implicitHeight
 
-    Rectangle {
-        id: button
-        anchors.centerIn: parent
-        implicitWidth: smallGrid.implicitWidth + 12
-        implicitHeight: 22
-        radius: Appearance.radius.small
-
-        color: (root.open || hover.containsMouse) ? Colors.surface0 : "transparent"
-        Behavior on color { ColorAnimation { duration: Appearance.anim.normal } }
+    Pill {
+        id: pill
+        anchors.fill: parent
+        hPadding: Appearance.padding.normal
+        fixedWidth: 100
+        highlighted: root.open || mouse.containsMouse
 
         WorkspaceGrid {
-            id: smallGrid
-            anchors.centerIn: parent
             perMonitor: root.perMonitor
         }
+    }
 
-        MouseArea {
-            id: hover
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: root.open = !root.open
-        }
+    MouseArea {
+        id: mouse
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onClicked: root.open = !root.open
     }
 
     MenuPopup {
