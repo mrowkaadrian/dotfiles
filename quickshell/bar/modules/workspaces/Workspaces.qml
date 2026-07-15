@@ -3,67 +3,66 @@ import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
 import qs.config
+import qs.components
 
-RowLayout {
+Item {
     id: root
-    spacing: 6
 
     readonly property int perMonitor: 5
-    readonly property int monitorCount: 2
+    property bool open: false
 
-    Repeater {
-        model: root.perMonitor * root.monitorCount
+    implicitWidth: button.implicitWidth
+    Layout.fillHeight: true
 
-        RowLayout {
-            id: entry
+    Rectangle {
+        id: button
+        anchors.centerIn: parent
+        implicitWidth: smallGrid.implicitWidth + 12
+        implicitHeight: 22
+        radius: Appearance.radius.small
+
+        color: (root.open || hover.containsMouse) ? Colors.surface0 : "transparent"
+        Behavior on color { ColorAnimation { duration: Appearance.anim.normal } }
+
+        WorkspaceGrid {
+            id: smallGrid
+            anchors.centerIn: parent
+            perMonitor: root.perMonitor
+        }
+
+        MouseArea {
+            id: hover
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: root.open = !root.open
+        }
+    }
+
+    MenuPopup {
+        anchorItem: root
+        open: root.open
+
+        edges: Edges.Bottom | Edges.Left
+        gravity: Edges.Bottom | Edges.Right
+
+        implicitWidth: bigGrid.implicitWidth + 28
+        implicitHeight: bigGrid.implicitHeight + 28
+
+        WorkspaceGrid {
+            id: bigGrid
+            anchors.centerIn: parent
+
+            perMonitor: root.perMonitor
+            cellSize: 34
+            cellRadius: Appearance.radius.small
             spacing: 6
+            showNumbers: true
+            interactive: true
 
-            required property int index
-
-            readonly property int wsId: index + 1
-            readonly property var ws: Hyprland.workspaces.values.find(w => w.id === wsId)
-            readonly property bool isActive: Hyprland.focusedWorkspace?.id === wsId
-
-            readonly property bool monitorBoundary: index > 0 && (index % root.perMonitor === 0)
-
-            // Extra gap between monitor groups
-            Item {
-                visible: entry.monitorBoundary
-                Layout.preferredWidth: 12
-                Layout.preferredHeight: 1
-            }
-
-            Rectangle {
-                id: workspaceButton
-
-                readonly property int inactiveWidth: label.implicitWidth + 14
-                readonly property int activeWidth: label.implicitWidth + 30
-
-                implicitWidth: entry.isActive ? activeWidth : inactiveWidth
-                implicitHeight: 22
-                radius: 6
-
-                color: entry.isActive
-                    ? Colors.mauve
-                    : (entry.ws ? Colors.surface0 : "transparent")
-
-                Behavior on implicitWidth { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
-                Behavior on color { ColorAnimation { duration: 150 } }
-
-                Text {
-                    id: label
-                    anchors.centerIn: parent
-                    text: entry.wsId
-                    color: entry.isActive
-                        ? Colors.crust
-                        : (entry.ws ? Colors.text : Colors.overlay0)
-                    font { family: "SF Mono"; pixelSize: 14; weight: 500 }
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: Hyprland.dispatch("hl.dsp.focus({ workspace = " + entry.wsId + " })")
-                }
+            onWorkspaceClicked: wsId => {
+                Hyprland.dispatch("hl.dsp.focus({ workspace = " + wsId + " })")
+                root.open = false
             }
         }
     }

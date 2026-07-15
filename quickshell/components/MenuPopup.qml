@@ -9,6 +9,8 @@ PopupWindow {
 
     property Item anchorItem
     property bool open: false
+    property int edges: Edges.Bottom | Edges.Right
+    property int gravity: Edges.Bottom | Edges.Left
 
     color: "transparent"
     visible: open || clipper.height > 0
@@ -18,8 +20,8 @@ PopupWindow {
     anchor.rect.y: 0
     anchor.rect.width: anchorItem?.width ?? 1
     anchor.rect.height: (anchorItem?.height ?? 2) - 1
-    anchor.edges: Edges.Bottom | Edges.Right
-    anchor.gravity: Edges.Bottom | Edges.Left
+    anchor.edges: edges
+    anchor.gravity: gravity
 
     Item {
         id: clipper
