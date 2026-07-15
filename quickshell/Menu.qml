@@ -9,6 +9,7 @@ Item {
     Layout.fillHeight: true
 
     property bool open: false
+    onOpenChanged: if (!open) session.reset()
 
     Rectangle {
         id: button
@@ -35,42 +36,18 @@ Item {
         }
     }
 
-    PopupWindow {
+    MenuPopup {
         id: menuPopup
-        color: "transparent"
-
-        visible: root.open || clipper.height > 0
-
-        anchor.item: root
-        anchor.rect.x: 0
-        anchor.rect.y: 0
-        anchor.rect.width: root.width
-        anchor.rect.height: root.height - 1
-        anchor.edges: Edges.Bottom | Edges.Right
-        anchor.gravity: Edges.Bottom | Edges.Left
+        anchorItem: root
+        open: root.open
 
         implicitWidth: 360
         implicitHeight: 200
 
-        Item {
-            id: clipper
-            anchors { left: parent.left; right: parent.right; top: parent.top }
-            clip: true
-
-            height: root.open ? parent.height : 0
-            Behavior on height {
-                NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
-            }
-
-            Rectangle {
-                anchors.fill: parent
-                anchors.topMargin: -20
-
-                color: Colors.base
-                border.color: Colors.surface1
-                border.width: 1
-                radius: 12
-            }
+        SessionButtons {
+            id: session
+            anchors.fill: parent
+            onCloseRequested: root.open = false
         }
     }
 }
