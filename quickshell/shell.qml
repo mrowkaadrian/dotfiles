@@ -17,7 +17,7 @@ ShellRoot {
                 right: true
             }
             implicitHeight: 30
-            color: "#040404"
+            color: Colors.base
 
             RowLayout {
                 anchors.fill: parent
@@ -28,6 +28,15 @@ ShellRoot {
                 Workspaces {}                
                 Clock {}
 
+                Item { Layout.fillWidth: true } // spacer, move menu to the right edge
+
+                Menu {}
+            }
+
+            Rectangle {
+                anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
+                height: 1
+                color: Colors.surface1
             }
         }
     }               
