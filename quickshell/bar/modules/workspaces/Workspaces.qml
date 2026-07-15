@@ -3,12 +3,13 @@ import Quickshell.Hyprland
 import QtQuick
 import qs.config
 import qs.components
+import qs.services
 
 Item {
     id: root
 
     readonly property int perMonitor: 5
-    property bool open: false
+    readonly property bool open: PopupManager.current === root
 
     implicitWidth: pill.implicitWidth
     implicitHeight: pill.implicitHeight
@@ -30,7 +31,7 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.open = !root.open
+        onClicked: PopupManager.toggle(root)
     }
 
     MenuPopup {
@@ -56,7 +57,7 @@ Item {
 
             onWorkspaceClicked: wsId => {
                 Hyprland.dispatch("hl.dsp.focus({ workspace = " + wsId + " })")
-                root.open = false
+                PopupManager.close(root)
             }
         }
     }

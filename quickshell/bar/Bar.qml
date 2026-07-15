@@ -25,7 +25,7 @@ PanelWindow {
     Music {
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: workspaces.right
-        anchors.rightMargin: 8
+        anchors.leftMargin: 8
     }
 
     Clock {

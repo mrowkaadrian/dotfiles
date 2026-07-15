@@ -4,12 +4,13 @@ import Quickshell.Services.SystemTray
 import QtQuick
 import qs.config
 import qs.components
+import qs.services
 
 Item {
     id: root
 
     required property SystemTrayItem item
-    property bool menuOpen: false
+    readonly property bool menuOpen: PopupManager.current === root
 
     implicitWidth: 18
     implicitHeight: 18
@@ -84,7 +85,7 @@ Item {
 
         onClicked: e => {
             if (e.button === Qt.LeftButton) root.bringHere();
-            else root.menuOpen = !root.menuOpen;
+            else PopupManager.toggle(root);
         }
     }
 
@@ -99,7 +100,7 @@ Item {
             id: menu
             anchors { left: parent.left; right: parent.right; top: parent.top; margins: 8 }
             handle: root.item.menu
-            onCloseRequested: root.menuOpen = false
+            onCloseRequested: PopupManager.close(root)
         }
     }
 }

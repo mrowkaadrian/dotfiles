@@ -2,11 +2,12 @@ import Quickshell
 import QtQuick
 import qs.config
 import qs.components
+import qs.services
 
 Item {
     id: root
 
-    property bool open: false
+    readonly property bool open: PopupManager.current === root
     onOpenChanged: if (!open) session.reset()
 
     implicitWidth: pill.implicitWidth
@@ -29,7 +30,7 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.open = !root.open
+        onClicked: PopupManager.toggle(root)
     }
 
     MenuPopup {
@@ -42,7 +43,7 @@ Item {
         SessionButtons {
             id: session
             anchors.fill: parent
-            onCloseRequested: root.open = false
+            onCloseRequested: PopupManager.close(root)
         }
     }
 }

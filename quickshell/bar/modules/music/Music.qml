@@ -3,11 +3,12 @@ import Quickshell.Services.Mpris
 import QtQuick
 import qs.config
 import qs.components
+import qs.services
 
 Item {
     id: root
 
-    property bool open: false
+    readonly property bool open: PopupManager.current === root
 
     readonly property MprisPlayer player: {
         const players = Mpris.players.values;
@@ -20,7 +21,7 @@ Item {
     implicitWidth: visible ? pill.implicitWidth : 0
     implicitHeight: pill.implicitHeight
 
-    onVisibleChanged: if (!visible) open = false
+    onVisibleChanged: if (!visible) PopupManager.close(root)
 
     Pill {
         id: pill
@@ -37,7 +38,7 @@ Item {
 
             Text {
                 anchors.verticalCenter: parent.verticalCenter
-                text: root.player?.trackTitle ?? ""
+                text: `${root.player?.trackTitle ?? ""} - ${root.player?.trackArtist ?? ""}`
                 color: Colors.text
                 elide: Text.ElideRight
                 width: Math.min(implicitWidth, 180)
@@ -51,7 +52,7 @@ Item {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.open = !root.open
+        onClicked: PopupManager.toggle(root)
     }
 
     MenuPopup {
