@@ -4,6 +4,7 @@ import qs.config
 import qs.bar.modules.workspaces
 import qs.bar.modules.music
 import qs.bar.modules.clock
+import qs.bar.modules.tray
 import qs.bar.modules.session
 
 PanelWindow {
@@ -30,6 +31,12 @@ PanelWindow {
     Clock {
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
+    }
+
+    Tray {
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: session.left
+        anchors.rightMargin: 8
     }
 
     SessionMenu {
