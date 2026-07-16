@@ -4,6 +4,8 @@ import Quickshell
 import QtQuick
 
 Singleton {
+    readonly property var locale: Qt.locale("en_GB")
+
     readonly property QtObject bar: QtObject {
         readonly property int height: 40
         readonly property int pillHeight: 26

@@ -12,13 +12,15 @@ PopupWindow {
     property int gap: Appearance.bar.gap
     property int edges: Edges.Bottom | Edges.Right
     property int gravity: Edges.Bottom | Edges.Left
+    property int xOffset: 0
+    property int yOffset: 0
 
     color: "transparent"
     visible: open || clipper.height > 0
 
     anchor.item: anchorItem
-    anchor.rect.x: 0
-    anchor.rect.y: 0
+    anchor.rect.x: xOffset
+    anchor.rect.y: yOffset
     anchor.rect.width: anchorItem?.width ?? 1
     anchor.rect.height: (anchorItem?.height ?? 1) + gap
     anchor.edges: edges
@@ -26,6 +28,7 @@ PopupWindow {
 
     Item {
         id: clipper
+
         anchors { left: parent.left; right: parent.right; top: parent.top }
         clip: true
 
