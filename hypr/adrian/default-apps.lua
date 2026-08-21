@@ -1,3 +1,0 @@
-local terminal    = "ghostty"
-local fileManager = "dolphin"
-local menu        = "hyprlauncher"
