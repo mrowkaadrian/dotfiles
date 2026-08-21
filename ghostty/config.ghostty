@@ -1,0 +1,9 @@
+confirm-close-surface=false
+theme = "Afterglow"
+
+background-opacity = 0.5
+background = 1a1a1c
+shell-integration = zsh
+window-padding-x = 15
+window-padding-y = 15
+window-padding-balance = true
